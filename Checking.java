@@ -1,14 +1,28 @@
-public  class Checking extends Account {
-    public double draftlimit;
+import java.io.Serializable;
+import java.util.Random;
 
+public class Checking extends Account implements Serializable {
+    private double draftlimit;
 
-    //constructor
-    public Checking(double draftlimit,double balance, String accountName, String accountNumber) {
-        super(accountNumber, accountName, balance);
+    // Default constructor
+    public Checking() {
+        super(generateAccountNumber(), "Default Name", 0.0);  // Modify the default name and balance if needed
+        this.draftlimit = 0.0;  // Default value for draft limit
+    }
+
+    // Constructor with parameters
+    public Checking(double draftlimit, double balance, String accountName) {
+        super(generateAccountNumber(), accountName, balance);  // Generate account number
         this.draftlimit = draftlimit;
     }
 
-    //get and set
+    // Generates a random 6-digit account number
+    private static int generateAccountNumber() {
+        Random rand = new Random();
+        return rand.nextInt(900000) + 100000;
+    }
+
+    // Getter and Setter for draft limit
     public double getDraftlimit() {
         return draftlimit;
     }
@@ -17,4 +31,8 @@ public  class Checking extends Account {
         this.draftlimit = draftlimit;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + ", Draft Limit: " + draftlimit;
+    }
 }
